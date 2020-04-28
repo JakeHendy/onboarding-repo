@@ -1,0 +1,14 @@
+{
+  "name": "github-onboarding-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake Hendy <me@jakehendy.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^17.6.0"
+  }
+}
