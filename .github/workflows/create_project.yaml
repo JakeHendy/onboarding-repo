@@ -20,5 +20,5 @@ jobs:
       uses: actions/setup-node@v1
     - run: npm ci
     - run: node index.js
-      with:
+      env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
