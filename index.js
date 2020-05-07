@@ -22,7 +22,8 @@ projects.forEach(project => {
         repo: REPO,
         name: metadata['name'],
     }).catch(e => console.log(e));
-
+    console.log(`${project} created as ${gh_project["id"]}`)
+    console.log(`${project} has ${metadata['columns'].length} columns`)
     metadata["columns"].forEach((column) =>
         octo.projects.createColumn({
             project_id: gh_project["id"],
