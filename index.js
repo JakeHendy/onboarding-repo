@@ -13,14 +13,22 @@ const octo = new Octokit({
 projects.forEach(project => {
     let metadataPath = `./projects/${project}/metadata.json`;
     let cards = fs.readdirSync(`./projects/${project}`);
-    let hasMetadata = fs.existsSync(`./projects/${project}/metadata.json`);
-    let metadata = hasMetadata ? JSON.parse(fs.readFileSync(metadataPath)) : { "name" : project };
-    let numberOfCards = hasMetadata ? cards.length - 1 : cards.length;
+    let metadata = JSON.parse(fs.readFileSync(metadataPath));
+    let numberOfCards =  cards.length;
     console.log(`${project} has ${numberOfCards} card(s)`);
 
-    let projectCreated = octo.projects.createForRepo({
+    let project = await octo.projects.createForRepo({
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
     }).catch(e => console.log(e));
+
+    await metadata["columns"].forEach((column) =>
+        await octo.projects.createColumn({
+            project_id: project["id"],
+            name: column
+        }).catch(e => console.log(e))
+    );
 })
+
+async function addTasks()
