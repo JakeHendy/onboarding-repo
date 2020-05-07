@@ -17,14 +17,14 @@ projects.forEach(project => {
     let numberOfCards =  cards.length;
     console.log(`${project} has ${numberOfCards} card(s)`);
 
-    let gh_project = await octo.projects.createForRepo({
+    let gh_project = octo.projects.createForRepo({
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
     }).catch(e => console.log(e));
 
-    await metadata["columns"].forEach((column) =>
-        await octo.projects.createColumn({
+    metadata["columns"].forEach((column) =>
+        octo.projects.createColumn({
             project_id: gh_project["id"],
             name: column
         }).catch(e => console.log(e))
