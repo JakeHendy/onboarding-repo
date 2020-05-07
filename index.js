@@ -11,8 +11,9 @@ const octo = new Octokit({
 })
 
 projects.forEach(async project => {
-    let metadataPath = `./projects/${project}/metadata.json`;
-    let cards = fs.readdirSync(`./projects/${project}`);
+    const projectPath = `./projects/${project}`;
+    let metadataPath = `${projectPath}/metadata.json`;
+    let cards = fs.readdirSync(projectPath);
     let metadata = JSON.parse(fs.readFileSync(metadataPath));
     let numberOfCards =  cards.length;
     console.log(`${project} has ${numberOfCards} card(s)`);
@@ -26,7 +27,7 @@ projects.forEach(async project => {
     const columns = await createColumns(gh_project['data'], metadata['columns']);
     console.log(columns)
     const firstColumn = columns[0]['data']['id'];
-    await createCards(firstColumn, cards);
+    await createCards(firstColumn,projectPath, cards);
     
 })
 
@@ -39,9 +40,9 @@ async function createColumns(project, columns) {
         })
     ))
 }
-async function createCards(firstColumn, cards) {
+async function createCards(firstColumn, projectPath, cards) {
     return Promise.all(cards.map(card_path => {
-        const content = fs.readFileSync(card_path);
+        const content = fs.readFileSync(`${projectPath}/${card_path}`);
         octo.projects.createCard({
             column_id: firstColumn,
             note: content
