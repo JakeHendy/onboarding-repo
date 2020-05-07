@@ -24,7 +24,6 @@ projects.forEach(async project => {
         body: metadata['description']
     })
     const columns = await createColumns(gh_project['data'], metadata['columns']);
-    console.log(columns)
     const firstColumn = columns[0]['data']['id'];
     await createCards(firstColumn, cards);
     
@@ -40,12 +39,11 @@ async function createColumns(project, columns) {
     )
 }
 async function createCards(firstColumn, cards) {
-    return cards.map(async card_path => 
-        {
+    return Promise.all(cards.map(async card_path => {
         const content = fs.readFileSync(card_path);
         octo.projects.createCard({
             column_id: firstColumn,
             note: content
         })
-        })
+    }))
 }
