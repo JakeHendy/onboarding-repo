@@ -1,4 +1,5 @@
 {
     "name": "Welcome!",
+    "description": "Your first project",
     "columns": ["To Do", "Done"]
 }

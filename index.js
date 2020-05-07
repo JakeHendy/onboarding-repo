@@ -21,6 +21,7 @@ projects.forEach(async project => {
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
+        body: metadata['description']
     })
     await createColumns(gh_project['data'], metadata['columns']);
     
