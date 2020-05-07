@@ -21,7 +21,7 @@ projects.forEach(project => {
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
-    }).catch(e => console.log(e)).then(prj => createColumns(prj, metadata[columns]));
+    }).catch(e => console.log(e)).then(prj => createColumns(prj, metadata['columns']));
     // console.log(`${project} created as ${gh_project["id"]}`)
     // console.log(`${project} has ${metadata['columns'].length} columns`)
     // metadata["columns"].forEach((column) =>
