@@ -27,6 +27,7 @@ projects.forEach(async project => {
 })
 
 async function createColumns(project, columns) {
+    console.log(project)
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
 
     columns.forEach(async column =>
