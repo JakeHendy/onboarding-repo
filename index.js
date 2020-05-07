@@ -24,6 +24,7 @@ projects.forEach(async project => {
         body: metadata['description']
     })
     const columns = await createColumns(gh_project['data'], metadata['columns']);
+    console.log(columns)
     const firstColumn = columns[0]['data']['id'];
     await createCards(firstColumn, cards);
     
