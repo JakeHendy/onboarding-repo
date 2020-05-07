@@ -29,8 +29,8 @@ projects.forEach(async project => {
 async function createColumns(project, columns) {
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
 
-    columns.forEach((column) =>
-        await octo.projects.createColumn({
+    columns.forEach(async column =>
+        octo.projects.createColumn({
             project_id: project["id"],
             name: column
         })
