@@ -10,36 +10,30 @@ const octo = new Octokit({
     auth: process.env.GITHUB_TOKEN
 })
 
-projects.forEach(project => {
+projects.forEach(async project => {
     let metadataPath = `./projects/${project}/metadata.json`;
     let cards = fs.readdirSync(`./projects/${project}`);
     let metadata = JSON.parse(fs.readFileSync(metadataPath));
     let numberOfCards =  cards.length;
     console.log(`${project} has ${numberOfCards} card(s)`);
 
-    let gh_project = octo.projects.createForRepo({
+    let gh_project = await octo.projects.createForRepo({
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
-    }).then(prj => createColumns(prj, metadata['columns'])).catch(console.log);
-    // console.log(`${project} created as ${gh_project["id"]}`)
-    // console.log(`${project} has ${metadata['columns'].length} columns`)
-    // metadata["columns"].forEach((column) =>
-    //     octo.projects.createColumn({
-    //         project_id: gh_project["id"],
-    //         name: column
-    //     }).catch(e => console.log(e))
-    // );
+    })
+    await createColumns(prj, metadata['columns']);
+    
 })
 
-function createColumns(project, columns) {
+async function createColumns(project, columns) {
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
-    return Promise.all(
-        columns.map((column) =>
-            octo.projects.createColumn({
-                project_id: project["id"],
-                name: column
-            })
-        )
+
+    columns.forEach((column) =>
+        await octo.projects.createColumn({
+            project_id: project["id"],
+            name: column
+        })
     )
+
 }
