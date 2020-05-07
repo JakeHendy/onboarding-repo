@@ -32,15 +32,15 @@ projects.forEach(async project => {
 
 async function createColumns(project, columns) {
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
-    return columns.map(async column =>
+    return Promise.all(columns.map(async column =>
         octo.projects.createColumn({
             project_id: project["id"],
             name: column
         })
-    )
+    ))
 }
 async function createCards(firstColumn, cards) {
-    return Promise.all(cards.map(async card_path => {
+    return Promise.all(cards.map(card_path => {
         const content = fs.readFileSync(card_path);
         octo.projects.createCard({
             column_id: firstColumn,
