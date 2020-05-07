@@ -42,7 +42,7 @@ async function createColumns(project, columns) {
 }
 async function createCards(firstColumn, projectPath, cards) {
     return Promise.all(cards.map(card_path => {
-        const content = fs.readFileSync(`${projectPath}/${card_path}`);
+        const content = fs.readFileSync(`${projectPath}/${card_path}`, 'utf8');
         octo.projects.createCard({
             column_id: firstColumn,
             note: content
