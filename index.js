@@ -21,13 +21,24 @@ projects.forEach(project => {
         owner: OWNER,
         repo: REPO,
         name: metadata['name'],
-    }).catch(e => console.log(e));
-    console.log(`${project} created as ${gh_project["id"]}`)
-    console.log(`${project} has ${metadata['columns'].length} columns`)
-    metadata["columns"].forEach((column) =>
-        octo.projects.createColumn({
-            project_id: gh_project["id"],
-            name: column
-        }).catch(e => console.log(e))
-    );
+    }).catch(e => console.log(e)).then(prj => createColumns(prj, metadata[columns]));
+    // console.log(`${project} created as ${gh_project["id"]}`)
+    // console.log(`${project} has ${metadata['columns'].length} columns`)
+    // metadata["columns"].forEach((column) =>
+    //     octo.projects.createColumn({
+    //         project_id: gh_project["id"],
+    //         name: column
+    //     }).catch(e => console.log(e))
+    // );
 })
+
+function createColumns(project, columns) {
+    return Promise.all(
+        columns.map((column) =>
+            octo.projects.createColumn({
+                project_id: project["id"],
+                name: column
+            })
+        )
+    )
+}
