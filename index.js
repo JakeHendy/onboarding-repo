@@ -30,5 +30,3 @@ projects.forEach(project => {
         }).catch(e => console.log(e))
     );
 })
-
-async function addTasks()
