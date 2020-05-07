@@ -22,7 +22,7 @@ projects.forEach(async project => {
         repo: REPO,
         name: metadata['name'],
     })
-    await createColumns(prj, metadata['columns']);
+    await createColumns(gh_project, metadata['columns']);
     
 })
 
