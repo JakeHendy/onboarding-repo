@@ -50,6 +50,7 @@ function createColumnsSync(project, columnNames) {
             name: column
         }))
     })
+    return columns;
 }
 
 async function createCards(firstColumn, projectPath, cards) {
