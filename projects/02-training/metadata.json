@@ -1,0 +1,5 @@
+{
+    "name": "Your Training!",
+    "description": "Mandatory and optional training",
+    "columns": ["To Do", "In Progress", "Done"]
+}
