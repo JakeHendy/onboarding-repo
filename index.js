@@ -31,25 +31,19 @@ projects.forEach(async project => {
     
 })
 
-async function createColumns(project, columns) {
-    console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
-    return Promise.all(columns.map(async column =>
-        octo.projects.createColumn({
-            project_id: project["id"],
-            name: column
-        })
-    ))
-}
-
 function createColumnsSync(project, columnNames) {
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
     let columns = []
-    columnNames.forEach(name => {
-        columns.push(await octo.projects.createColumn({
-            project_id: project["id"],
-            name: column
-        }))
-    })
+    columnNames.forEach(
+        columnName => {
+            columns.push(
+                await octo.projects.createColumn({
+                    project_id: project["id"],
+                    name: columnName
+                })
+            )
+        }
+    )
     return columns;
 }
 
