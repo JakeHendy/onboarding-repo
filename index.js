@@ -13,7 +13,7 @@ const octo = new Octokit({
 projects.forEach(async project => {
     const projectPath = `./projects/${project}`;
     let metadataPath = `${projectPath}/metadata.json`;
-    let cards = fs.readdirSync(projectPath);
+    let cards = fs.readdirSync(projectPath).filter(f => f != "metadata.json");
     let metadata = JSON.parse(fs.readFileSync(metadataPath));
     let numberOfCards =  cards.length;
     console.log(`${project} has ${numberOfCards} card(s)`);
