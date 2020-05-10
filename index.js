@@ -37,10 +37,10 @@ function createColumnsSync(project, columnNames) {
     columnNames.forEach(
         columnName => {
             columns.push(
-                await octo.projects.createColumn({
+                octo.projects.createColumn({
                     project_id: project["id"],
                     name: columnName
-                })
+                }).resolve()
             )
         }
     )
