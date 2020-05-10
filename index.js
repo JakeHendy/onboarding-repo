@@ -36,12 +36,11 @@ function createColumnsSync(project, columnNames) {
     let columns = []
     columnNames.forEach(
         columnName => {
-            columns.push(
-                octo.projects.createColumn({
+            let createdColumn = await octo.projects.createColumn({
                     project_id: project["id"],
                     name: columnName
-                }).resolve()
-            )
+                })
+            columns.push(createdColumn)
         }
     )
     return columns;
