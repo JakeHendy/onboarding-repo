@@ -19,9 +19,9 @@ jobs:
     - name: Use Ruby
       uses: actions/setup-ruby@v1
     - env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       run: | 
-      gem install bundler
-      bundle install --jobs 2
-      ruby main.rb
+        gem install bundler
+        bundle install --jobs 2
+        ruby main.rb
       
