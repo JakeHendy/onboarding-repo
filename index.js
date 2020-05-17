@@ -10,10 +10,7 @@ const octo = new Octokit({
     auth: process.env.GITHUB_TOKEN
 })
 
-projects.reduce((sequence, projectName) => {
-
-    return sequence.then(
-        () => {
+projects.forEach(projectName => {
             const projectPath = `./projects/${projectName}`;
             let metadataPath = `${projectPath}/metadata.json`;
             let cards = fs.readdirSync(projectPath).filter(f => f != "metadata.json");
@@ -32,10 +29,8 @@ projects.reduce((sequence, projectName) => {
             .then(
                 ghColumns => createCards(ghColumns[0]["data"]["id"], cards)
                 )
-        }, Promise.resolve()
+        }
     )
-
-})
 
 function createColumns(project, columns) {
     console.log(`Creating columns for ${project["id"]}/${project["name"]}`)
