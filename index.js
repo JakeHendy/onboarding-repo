@@ -27,7 +27,7 @@ projects.forEach(projectName => {
                 ghProject => createColumns(ghProject["data"], metadata['columns'])
                 )
             .then(
-                ghColumns => createCards(ghColumns[0]["data"]["id"], cards)
+                ghColumns => createCards(ghColumns[0]["data"]["id"], projectPath, cards)
                 )
         }
     )
@@ -42,7 +42,7 @@ function createColumns(project, columns) {
     }))
 }
 
-function createCards(firstColumn, cards) {
+function createCards(firstColumn, projectPath, cards) {
     return Promise.all(cards.map(card_path => {
         const content = fs.readFileSync(`${projectPath}/${card_path}`, 'utf8');
         return octo.projects.createCard({
