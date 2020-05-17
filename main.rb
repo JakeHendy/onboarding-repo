@@ -13,6 +13,6 @@ for project in projectList do
     metadata = JSON.load metadata_file
     metadata_file.close
     puts "#{metadata["name"]}"
-    puts client.create_project(ownerRepoSlug, metadata["name"])
+    puts client.create_project(ownerRepoSlug, metadata["name"], body: metadata["description"])
 
 end
