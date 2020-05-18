@@ -25,6 +25,6 @@ for project in projectList do
     }
     columns = client.project_columns(gh_project["id"])
     first_column = columns.select { |c| c["name"] == metadata["columns"][0]}[0]
-    puts "First column (#{first_column["name"]}) has id #{first_column["id"}"
-    
+    puts "First column (#{first_column["name"]}) has id #{first_column["id"]}"
+
 end
