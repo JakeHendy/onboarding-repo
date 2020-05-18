@@ -27,4 +27,15 @@ for project in projectList do
     first_column = columns.select { |c| c["name"] == metadata["columns"][0]}[0]
     puts "First column (#{first_column["name"]}) has id #{first_column["id"]}"
 
+    cards = Dir.children("projects/#{project}").filter { |c| c != "metadata.json"}.sort
+
+    for card in cards do 
+        card_file = File.open("projects/#{project}/#{card}")
+        title = card_file.readline.split('# ')[1]
+        body = card_file.read
+        gh_issue = client.create_issue(repository, title, body)
+        gh_card = client.create_project_card(gh_project["id"], content_id: gh_issue["id"], content_type: "Issue")
+        card_file.close
+    end
+    
 end
