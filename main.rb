@@ -33,7 +33,7 @@ for project in projectList do
         card_file = File.open("projects/#{project}/#{card}")
         title = card_file.readline.split('# ')[1]
         body = card_file.read
-        gh_issue = client.create_issue(repository, title, body)
+        gh_issue = client.create_issue(ownerRepoSlug, title, body)
         gh_card = client.create_project_card(gh_project["id"], content_id: gh_issue["id"], content_type: "Issue")
         card_file.close
     end
