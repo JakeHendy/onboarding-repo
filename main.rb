@@ -13,6 +13,18 @@ for project in projectList do
     metadata = JSON.load metadata_file
     metadata_file.close
     puts "#{metadata["name"]}"
-    puts client.create_project(ownerRepoSlug, metadata["name"], body: metadata["description"])
-
+    gh_project = client.create_project(ownerRepoSlug, metadata["name"], body: metadata["description"])
+    puts "Created #{gh_project['id']}"
+    firstColumnId = ""
+    # create columns
+    metadata["columns"].each {
+        |column| client.create_project_column(
+            gh_project["id"],
+            column
+        )
+    }
+    columns = client.project_columns(gh_project["id"])
+    first_column = columns.select { |c| c["name"] == metadata["columns"][0]}[0]
+    puts "First column (#{first_column["name"]}) has id #{first_column["id"}"
+    
 end
