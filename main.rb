@@ -1,6 +1,16 @@
 require 'octokit'
 require 'json'
 
+stack = Faraday::RackBuilder.new do |builder|
+    builder.use Faraday::Request::Retry, exceptions: [Octokit::ServerError]
+    builder.use Octokit::Middleware::FollowRedirects
+    builder.use Octokit::Response::RaiseError
+    builder.use Octokit::Response::FeedParser
+    builder.response :logger
+    builder.adapter Faraday.default_adapter
+end
+Octokit.middleware = stack
+
 client = Octokit::Client.new(:access_token => ENV["GITHUB_TOKEN"])
 ownerRepoSlug = ENV.key?("GITHUB_REPOSITORY") ? ENV["GITHUB_REPOSITORY"] : "JakeHendy/onboarding-repo"
 owner = ownerRepoSlug.split('/')[0]
